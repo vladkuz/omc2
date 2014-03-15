@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>OmC-2</title>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/resources.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+
+	<script type="text/javascript">
+
+		$(function () {
+			game.start($('#container'));
+			
+			//test:
+			for(var i=0;i<game.resources.items.length;) {
+				document.body.appendChild(game.resources.items[i++].getImage());
+			}
+		});
+	</script>
+
+	<style type="text/css">
+		body
+		{
+			background-color:#5A162B;
+		}
+    </style>
+</head>
+
+<body>
+<div id="container">
+</div>
+</body>
+</html>
