@@ -42,6 +42,56 @@ var gamePage = function (g) {
 	};
 };
 
+var bakery = function(g) {
+	this.game = g;
+	this.chef = null;
+	this.init = function() {
+		// create a default chef
+		this.chef = this.game.chefFactory.getDefaultChef();
+	};
+};
+
+var chef = function(chefName, salary, flavor) {
+	this.name = chefName;
+	this.salary = salary;
+	this.currentSkillLevel = 0;
+	this.flavor = flavor;
+	this.createCupcake = function() {
+		return new cupcake(this.flavor, this.generateCupcakeLevel());
+	};
+	this.generateCupcakeLevel = function() {
+		var 
+			rnd = Math.random()*100,
+			level = this.currentSkillLevel;
+// 50%, 25%, 15%, 5%, 5%  
+		if ( rnd < 50 ) {
+			return level;
+		}
+		else if ( rnd < 75 ) {
+			return level + 1;
+		}
+		else if ( rnd < 90 ) {
+			return level + 2;
+		}
+		else if ( rnd < 95 ) {
+			return level + 3;
+		}
+		else {
+			return -1; // special cupcake
+		}
+	};
+};
+
+var chefFactory = function() {
+	this.getDefaultChef = function () {
+		return new chef("Novice", 0);
+	};
+};
+
+var cupcake = function(flavor, level) {
+	this.level = level;
+	this.flavor = flavor;
+};
 
 var game = {
 	
@@ -95,7 +145,10 @@ var game = {
 			that = this;
 
 		this.log('Displaying menu now.');
-		this.pages.menuPage.show(this.menuChoices, function (choice) { that.onMenuChoice(choice); });
+		this.pages.menuPage.show(this.menuChoices, 
+			function (choice) { 
+				that.onMenuChoice(choice); 
+			});
 		
 
 	},
@@ -127,7 +180,10 @@ var game = {
 		var 
 			that = this;
 			
-		this.pages.gamePage.show(function(gameResult) { that.onGameOver(gameResult); });
+		this.pages.gamePage.show(
+			function(gameResult) { 
+				that.onGameOver(gameResult); 
+			});
 	},
 	
 	onGameOver: function (gameResult) {
