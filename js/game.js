@@ -59,6 +59,27 @@ var chef = function(chefName, salary, flavor) {
 	this.createCupcake = function() {
 		return new cupcake(this.flavor, this.generateCupcakeLevel());
 	};
+	this.skillSet = { special: 5, regular:[ 50,25,15,5]};
+
+	this.verifySkillSet = function (skillSet) {
+		var t = 0;
+		for(var i=0;i<skillSet.regular.length;i+=1) {
+			t += skillSet.regular[i];
+		}
+		return ( t + skillSet.special === 100 );
+	};
+
+	this.generateLevel = function(skillSet) {
+		if (this.verifySkillSet(skillSet) === false) throw "Invalid skillset.";
+		var 
+			i = 0,
+			rnd = Math.random()*100,
+			runningT = skillSet.special;
+		while ( rnd >= runningT ) {
+			runningT += skillSet.regular[i++];
+		}
+		return i; // Zero means "special"
+	};
 	this.generateCupcakeLevel = function() {
 		var 
 			rnd = Math.random()*100,
